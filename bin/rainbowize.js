@@ -36,13 +36,26 @@ async function main() {
     // Read each line from stdin and print it to stdout with a different color.
     let j = 0;
     for await (const input of reader) {
+        if (!input) {
+            console.error("Error: Empty input received.");
+            continue;
+        }
+
         // Calculate RGB values based on the line number.
         const [r, g, b] = rgb(j);
 
         // Print the line to stdout with the calculated color.
-        console.log(`\x1b[38;2;${r};${g};${b}m${input}\x1b[0m`);
+        try {
+            console.log(`\x1b[38;2;${r};${g};${b}m${input}\x1b[0m`);
+        } catch (error) {
+            // Handle errors during console output
+            console.error("Error during output:", error.message);
+        }
+
         j++;
     }
 }
 
-main();
+main().catch(error => {
+    console.error("An unhandled error occurred:", error);
+});
