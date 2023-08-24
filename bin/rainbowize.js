@@ -1,4 +1,6 @@
 const readline = require('readline');
+const argv = require('minimist')(process.argv.slice(2));
+
 
 /**
  * Calculate RGB values based on an index.
@@ -21,10 +23,17 @@ function rgb(i) {
 async function main() {
     const stdin = process.stdin;
 
+    // Check if the user wants to see the help message.
+    if (argv.h || argv.help) {
+        console.log("Usage: <cmd> | rainbowize");
+        console.log("--help: Show usage information");
+        return;
+    }
+
     // Check if input is coming from a TTY (terminal) or not (piped).
     if (stdin.isTTY) {
         console.log("The command is intended to work with pipes.");
-        console.log("Usage: fortune | rainbowize");
+        console.log("Usage: <cmd> | rainbowize");
         return;
     }
 

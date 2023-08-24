@@ -24,5 +24,8 @@
     "ASCII",
     "styling"
   ],
-  "license": "GPL-3.0"
+  "license": "GPL-3.0",
+  "dependencies": {
+    "minimist": "^1.2.8"
+  }
 }
