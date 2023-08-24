@@ -1,0 +1,28 @@
+{
+  "name": "rainbowize",
+  "version": "1.0.0",
+  "description": "\"Rainbowize\" is a terminal application that transforms plain text into a vibrant array of rainbow colors.",
+  "main": "bin/rainbowize.js",
+  "bin": {
+    "rainbowize": "./bin/rainbowize.js"
+  },
+  "scripts": {
+    "start": "node bin/rainbowize.js"
+  },
+  "author": {
+    "name": "Semih Arslan",
+    "email": "arslan_semih@yahoo.com",
+    "url": "https://tr.linkedin.com/in/semih-arslan-b06693189"
+  },
+  "keywords": [
+    "terminal",
+    "color",
+    "rainbow",
+    "text",
+    "vibrant",
+    "CLI",
+    "ASCII",
+    "styling"
+  ],
+  "license": "GPL-3.0"
+}
