@@ -16,6 +16,16 @@ async function main() {
     .option("scheme", {
       alias: "s",
       describe: "Color scheme for rainbowizing",
+    })
+    .option("bold", {
+      alias: "b",
+      describe: "Apply bold text effect",
+      boolean: true,
+    })
+    .option("italic", {
+      alias: "i",
+      describe: "Apply italic text effect",
+      boolean: true,
     }).argv;
 
   if (argv.help) {
@@ -34,9 +44,11 @@ async function main() {
     input: stdin,
   });
 
-  const scheme = argv.scheme;
+  const scheme = argv.s || argv.scheme;
+  const bold = argv.bold || false;
+  const italic = argv.italic || false;
 
-  await rainbowizeInput(reader, scheme);
+  await rainbowizeInput(reader, scheme, bold, italic);
 }
 
 main().catch((error) => {
