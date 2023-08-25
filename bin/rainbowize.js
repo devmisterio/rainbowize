@@ -1,11 +1,24 @@
+#!/usr/bin/env node
+
 const readline = require("readline");
-const argv = require("minimist")(process.argv.slice(2));
+const yargs = require("yargs/yargs");
+const { hideBin } = require("yargs/helpers");
 const { rainbowizeInput } = require("../lib/utils/input");
 
 async function main() {
   const stdin = process.stdin;
 
-  if (argv.h || argv.help) {
+  const argv = yargs(hideBin(process.argv))
+    .option("help", {
+      alias: "h",
+      describe: "Show usage information",
+    })
+    .option("scheme", {
+      alias: "s",
+      describe: "Color scheme for rainbowizing",
+    }).argv;
+
+  if (argv.help) {
     console.log("Usage: <cmd> | rainbowize");
     console.log("--help: Show usage information");
     return;
@@ -21,7 +34,7 @@ async function main() {
     input: stdin,
   });
 
-  const scheme = argv.s || argv.scheme;
+  const scheme = argv.scheme;
 
   await rainbowizeInput(reader, scheme);
 }
