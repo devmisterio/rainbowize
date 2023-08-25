@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
 const readline = require("readline");
+const fs = require("fs");
 const yargs = require("yargs/yargs");
 const { hideBin } = require("yargs/helpers");
 const { rainbowizeInput } = require("../lib/utils/input");
+const path = require("path");
 
 async function main() {
   const stdin = process.stdin;
@@ -28,6 +30,23 @@ async function main() {
       boolean: true,
     }).argv;
 
+  let config = {};
+  try {
+    const configFile = fs.readFileSync(path.join(__dirname, "config.json"), {
+      encoding: "utf-8",
+      flag: "r",
+    });
+    config = JSON.parse(configFile);
+  } catch (error) {
+    console.warn(
+      "Configuration file not found or invalid. Using default options."
+    );
+  }
+
+  const defaultScheme = config.customScheme || false;
+  const defaultBold = config.defaultBold || false;
+  const defaultItalic = config.defaultItalic || false;
+
   if (argv.help) {
     console.log("Usage: <cmd> | rainbowize");
     console.log("--help: Show usage information");
@@ -44,9 +63,9 @@ async function main() {
     input: stdin,
   });
 
-  const scheme = argv.s || argv.scheme;
-  const bold = argv.bold || false;
-  const italic = argv.italic || false;
+  const scheme = argv.scheme || defaultScheme;
+  const bold = argv.bold || defaultBold;
+  const italic = argv.italic || defaultItalic;
 
   await rainbowizeInput(reader, scheme, bold, italic);
 }
