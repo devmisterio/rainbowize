@@ -1,31 +1,32 @@
 #!/usr/bin/env node
 
-const { rainbowizeInput } = require("../lib/utils/input");
 const { ConfigManager } = require("../lib/class/ConfigManager");
 const { CommandProcessor } = require("../lib/class/CommandProcessor");
+const { Application } = require("../lib/rainbowize");
 
+/**
+ * Entry point of the rainbowize application.
+ * This script sets up and runs the rainbowize application using the Application class.
+ */
+
+/**
+ * Main function that starts the rainbowize application.
+ * @async
+ * @function main
+ */
 async function main() {
+	// Create instances of CommandProcessor and ConfigManager classes
 	const commandProcessor = new CommandProcessor();
 	const configManager = new ConfigManager();
 
-	commandProcessor.handleTTYCheck();
-	const argv = commandProcessor.parseArguments();
+	// Create an instance of the Application class and pass the dependencies
+	const app = new Application(commandProcessor, configManager);
 
-	const config = configManager.loadConfig();
-
-	const defaultScheme = config.customScheme || false;
-	const defaultBold = config.defaultBold || false;
-	const defaultItalic = config.defaultItalic || false;
-
-	const reader = commandProcessor.createInputReader();
-
-	const scheme = argv.scheme || defaultScheme;
-	const bold = argv.bold || defaultBold;
-	const italic = argv.italic || defaultItalic;
-
-	await rainbowizeInput(reader, scheme, bold, italic);
+	// Run the rainbowize application
+	await app.run();
 }
 
+// Run the main function and catch any unhandled errors
 main().catch((error) => {
 	console.error("An unhandled error occurred:", error);
 });
