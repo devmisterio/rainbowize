@@ -1,11 +1,10 @@
 #!/usr/bin/env node
 
 const readline = require("readline");
-const fs = require("fs");
 const yargs = require("yargs/yargs");
-const { hideBin } = require("yargs/helpers");
-const { rainbowizeInput } = require("../lib/utils/input");
-const path = require("path");
+const {hideBin} = require("yargs/helpers");
+const {rainbowizeInput} = require("../lib/utils/input");
+const {ConfigManager} = require("../lib/class/ConfigManager");
 
 async function main() {
   const stdin = process.stdin;
@@ -30,18 +29,8 @@ async function main() {
       boolean: true,
     }).argv;
 
-  let config = {};
-  try {
-    const configFile = fs.readFileSync(path.join(__dirname, "config.json"), {
-      encoding: "utf-8",
-      flag: "r",
-    });
-    config = JSON.parse(configFile);
-  } catch (error) {
-    console.warn(
-      "Configuration file not found or invalid. Using default options."
-    );
-  }
+  const configManager = new ConfigManager();
+  const config = configManager.loadConfig();
 
   const defaultScheme = config.customScheme || false;
   const defaultBold = config.defaultBold || false;
