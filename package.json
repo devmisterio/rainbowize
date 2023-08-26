@@ -7,7 +7,8 @@
     "rainbowize": "./bin/rainbowize.js"
   },
   "scripts": {
-    "start": "node bin/rainbowize.js"
+    "start": "node bin/rainbowize.js",
+    "format": "npx rome format . --write"
   },
   "author": {
     "name": "Semih Arslan",
@@ -30,6 +31,8 @@
     "yargs": "^17.7.2"
   },
   "devDependencies": {
+    "chai": "^4.3.8",
+    "mocha": "^10.2.0",
     "rome": "12.1.3"
   }
 }
