@@ -25,6 +25,7 @@
     "ASCII",
     "styling"
   ],
+  "homepage": "https://github.com/devmisterio/rainbowize",
   "license": "GPL-3.0",
   "dependencies": {
     "minimist": "^1.2.8",
